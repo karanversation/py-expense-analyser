@@ -158,17 +158,9 @@ class HDFCParser(object):
         debit_lines, credit_lines = self._separate_debit_credit()
 
         if show_credit:
-            HDFCParser.parse_transactions(
-                credit_lines,
-                credit_map,
-                detailed_category,
-                display_args)
+            HDFCParser.parse_transactions(credit_lines, credit_map, detailed_category, display_args)
         else:
-            HDFCParser.parse_transactions(
-                debit_lines,
-                debit_map,
-                detailed_category,
-                display_args)
+            HDFCParser.parse_transactions(debit_lines, debit_map, detailed_category, display_args)
 
 def create_args_parser():
     parser = argparse.ArgumentParser(description='Categorize expenses from bank statement')
