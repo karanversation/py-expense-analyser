@@ -96,9 +96,7 @@ class HDFCParser(object):
             found = False
             for t_substr in all_transaction_substrs:
                 try:
-                    # TODO start using regex
                     if re.match(t_substr, tl.description):
-                    # if t_substr in tl.description:
                         transaction_groups[t_substr].append(TransactionLine(line))
                         found = True
                         break
@@ -133,7 +131,6 @@ class HDFCParser(object):
                 total_transaction_amount = sum([tl.amount for tl in transaction_groups.get(t_substr, [])])
                 # only print non-zero amounts
                 if total_transaction_amount:
-                    # print format_str.format(total_transaction_amount, t_substr)
                     # print transaction lines
                     for tl in transaction_groups.get(t_substr):
                         print tl
@@ -154,6 +151,8 @@ class HDFCParser(object):
         # filter step
         self._filter_valid_transactions(month)
         self._remove_ignore_transactions()
+
+        # TODO handle removal of reversed transactions
 
         # segregate transactions
         debit_lines, credit_lines = self._separate_debit_credit()
