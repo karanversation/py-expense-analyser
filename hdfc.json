@@ -1,0 +1,156 @@
+{
+    "category_transaction_map": {
+        "debit": {
+            "atm_withdrawl": [
+                "ATW-\\d{6}X{6}\\d{4}-",
+                "NWD-\\d{6}X{6}\\d{4}-"
+            ],
+            "bill_society": [
+                "CHQ PAID-TRANSFER IN-KARETAKER SOLUTIONS",
+                "POS \\d{6}X{6}\\d{4} SOCIETY CONNECT"
+            ],
+            "cabs": [
+                "POS \\d{6}X{6}\\d{4} UBER",
+                "POS \\d{6}X{6}\\d{4} SHUTTL",
+                "POS \\d{6}X{6}\\d{4} GRAB",
+                "POS \\d{6}X{6}\\d{4} PAYU-WWW.OLACABS",
+                "UPI-SUPER HIGHWAY LABS P-SHUTTL.RAZORPAY"
+            ],
+            "loan": [
+                "NEFT DR-UTIB\\d{7}-MUM AXIS-SANDOZ - MU",
+                "ACH D- CCPC NEW DELHI-EMI-00000000000000",
+                "CHQ PAID-MICR CTS-NO-\\w*"
+            ],
+            "insurance": [
+                "POS \\d{6}X{6}\\d{4} TPS\\*SBI LIFE INS"
+            ],
+            "investment": [
+                "UPI-\\d{12}-SBICARDSLM\\d{12}-"
+            ],
+            "online_groceries": [
+                "POS \\d{6}X{6}\\d{4} DOORSTEP RETAIL",
+                "POS \\d{6}X{6}\\d{4} PAYU-WWW.BIGBASK",
+                "POS REF \\d{6}\\*{6}\\d{4}-\\d{2}\\/\\d{2} WWW.BIGBA",
+                "POS \\d{6}X{6}\\d{4} BB DAILY",
+                "POS \\d{6}X{6}\\d{4} INNOVATIVE RETAI",
+                "POS \\d{6}X{6}\\d{4} MILKBASKET PAYTM",
+                "UPI-MILKDAIRYCOOPERATIVE-MILKDAIRYCOOPER",
+                "UPI-EASEBUZZ-EASEBUZZ.NBFC@HDFCBANK-HDFC",
+                "UPI-BIGBASKET-PAYTM-",
+                "UPI-MILKBASKET-PAYTM-MILKBASKET@PAYTM-PY",
+                "UPI-FAST AND FRESH"
+            ],
+            "online_food": [
+                "UPI-ZOMATO-ZOMATO-ORDER@PAYTM-PYTM012345"
+            ],
+            "online_shopping": [
+                "POS \\d{6}X{6}\\d{4} AMAZON",
+                "POS \\d{6}X{6}\\d{4} PAYU-FLIPKART PA",
+                "POS \\d{6}X{6}\\d{4} MYNTRA DESIGNS P",
+                "POS \\d{6}X{6}\\d{4} FLIPKART PAYMENT"
+            ],
+            "amazon_pay": [
+                "UPI-AMAZON-AMAZON@APL-UTIB0000100-\\d+",
+                "UPI-AMAZONPAY-AMAZONPAY@APL-UTIB0000100-"
+            ],
+            "furniture": [
+                "POS \\d{6}X{6}\\d{4} GREEN SOUL"
+            ],
+            "entertainment": [
+                "POS \\d{6}X{6}\\d{4} EVENTBRITE",
+                "POS \\d{6}X{6}\\d{4} PVR LIMITED"
+            ],
+            "petrol": [
+                "POS \\d{6}X{6}\\d{4} OMSAIFILLINGSTAT",
+                "POS \\d{6}X{6}\\d{4} OM SAI."
+            ],
+            "gas": [
+                "POS \\d{6}X{6}\\d{4} INDRAPRASTHA GAS",
+                "UPI-INDRAPRASTHA GAS LIM-"
+            ],
+            "bill_postpaid": [
+                "POS \\d{6}X{6}\\d{4} PAYU-WWW.VODAFON",
+                "UPI-VODAFONE IDEA LIMITE-VMSLPOSTPAID@HS",
+                "UPI-RELIANCE JIO INFOCOM-JIO@CITIBANK-CI"
+            ],
+            "medical": [
+                "POS \\d{6}X{6}\\d{4} KAILASH HEALTH C",
+                "POS \\d{6}X{6}\\d{4} PAYU\\*QIKWELL TEC",
+                "POS \\d{6}X{6}\\d{4} QIKWELL",
+                "POS \\d{6}X{6}\\d{4} UMA MEDICARE LTD",
+                "POS \\d{6}X{6}\\d{4} SR PHARMACY",
+                "UPI-PRACTO-PRACTO1.PAYU@HDFCBANK-HDFC000"
+            ],
+            "paytm": [
+                "POS \\d{6}X{6}\\d{4} PTM\\*PAYTM",
+                "UPI-X{6}\\d{4}-PYTM0123456-\\d{12}-"
+            ],
+            "official": [
+                "UPI-UNIQUE INDENTIFICATI-RESIDENT.UIDAI.",
+                "POS \\d{6}X{6}\\d{4} PASSPORTSEVAMOPS"
+            ],
+            "donations": [
+                "POS \\d{6}X{6}\\d{4} MILAAP"
+            ],
+            "transfer_others": [
+                "UPI-ASIF",
+                "UPI-KOMAL",
+                "UPI-MR RAMAN KUMAR-MONIRAMAN@OKAXIS-SCBL"
+            ],
+            "other_card_payments": [
+                "POS \\d{6}X{6}\\d{4}"
+            ]
+        },
+        "credit": {
+            "interest": [
+                "MONTHLY INTEREST CREDIT \\d{14}",
+                "CREDIT INTEREST CAPITALISED"
+            ],
+            "salary": [
+                "NEFT CR-\\w{4}\\d{7}-EIGHTFOLD AI INDIA P"
+            ],
+            "refunds": [
+                "POS REF \\d{6}\\*{6}\\d{4}-",
+                "CRV POS \\d{6}\\*{6}\\d{4} OMSAIFILLINGSTA"
+            ],
+            "fd": [
+                "PRINCIPAL AUTO REDEEM \\d{14}"
+            ],
+            "dividends":    [
+                "ACH C- SBI CARDS AND PAYMEN-\\d{6}"
+            ]
+        },
+        "common": {
+            "transfer_family": [
+                "NEFT DR-[A-Z]{4}0[A-Z0-9]{6}-PAPA SBI-SANDOZ - MU",
+                "RTGS DR-[A-Z]{4}0[A-Z0-9]{6}-PAPA SBI-NETBANK",
+                "RTGS DR-[A-Z]{4}0[A-Z0-9]{6}-MUM ICICI-NETBANK, M",
+                "NEFT DR-[A-Z]{4}0[A-Z0-9]{6}-MUM ICICI-NETBANK, M",
+                "NEFT DR-[A-Z]{4}0[A-Z0-9]{6}-PRIYA GABA-NETBANK,",
+                "IMPS-\\d{12}-PRIYA GABA-UTIB-XXXXXX",
+                "UPI-KAMAL",
+                "UPI-PRIYA GABA-PRIYA.GABA95@OKAXIS-UTIB0"
+            ],
+            "transfer_friends": [
+                "NEFT DR-[A-Z]{4}0[A-Z0-9]{6}-PRIYANKAPAL-NETBANK,",
+                "IMPS-\\d{12}-RISHABH TIWARI-HDFC-XX",
+                "IMPS-\\d{12}-RISHABH TIWARI-HDFC-XX",
+                "UPI-PRABHAT BAHUKHANDI-PBAHUK@OKAXIS-UTI",
+                "UPI-MOHIT DHINGRA-MOHITDHINGRA01@OKHDFCB",
+                "UPI-MR BHARAT GABA S O T-BHARATGABA04@OK",
+                "UPI-ARUN KUMAR-MAIL.GAHLAWAT@OKHDFCBANK-",
+                "UPI-SHELLEY-\\d{10}@PAYTM-[A-Z]{4}0[A-Z0-9]{6}",
+                "UPI-ESHESH"
+            ]
+        }
+    },
+    "ignore_transactions": [
+        "\\.DC INTL POS TXN MARKUP\\+ST \\d{6} \\d{6}",
+        "\\.DC INTL ATM W/D MARKUP\\+ST \\d{6} \\d{6}",
+        "\\.ATM FEES INTL W/D INCL ST",
+        "DEBIT CARD ATM ADJ DT \\d{2}\/\\d{2}\/\\d{2}",
+        "DEBIT CARD PUR ADJ DT \\d{2}\/\\d{2}\/\\d{2}",
+        "RTGS-RETURN-AC01-INCORRECT ACCOUNT NUMBE",
+        "UPI RET-\\d{4}-\\d{2}-\\d{2}-\\d{12}"
+    ]
+}
