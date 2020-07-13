@@ -55,16 +55,24 @@ class HDFCParser(object):
         for line in self.stmt_lines:
             amounts = get_amounts_from_line(line)
             dates = re.findall(r'\d\d/\d\d/\d\d', line)
-            if len(amounts) != 2:
-                raise Exception('ERROR: {}\n{}'.format(amounts, line))
-            if len(dates) != 2:
-                raise Exception('ERROR: {}\n{}'.format(dates, line))
+            n_amounts = len(amounts)
+            n_dates = len(dates)
+
+            # skip line if amounts/dates <2
+            if n_amounts < 2 or n_dates < 2:
+                print 'ERROR: {} {}\n{}'.format(amounts, dates, line)
+                continue
+            # show warning if >2
+            if n_amounts > 2 or n_dates > 2:
+                print 'WARNING: {} {}\n{}'.format(amounts, dates, line)
+
             transaction_amt = amounts[0]
             date_len = len('01/01/20')
+            right_date = dates[-1]
             if dates[0] == dates[1]:
-                lpos = find_second_occurence(line, dates[1])+date_len-1
+                lpos = find_second_occurence(line, right_date)+date_len-1
             else:
-                lpos = line.find(dates[1])+date_len-1
+                lpos = line.find(right_date)+date_len-1
             rpos = line.find(amounts[1])
             amount_pos = line.find(amounts[0])
             if (amount_pos-lpos) < (rpos-(amount_pos+len(amounts[0]))):

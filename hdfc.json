@@ -14,18 +14,25 @@
                 "POS \\d{6}X{6}\\d{4} SHUTTL",
                 "POS \\d{6}X{6}\\d{4} GRAB",
                 "POS \\d{6}X{6}\\d{4} PAYU-WWW.OLACABS",
-                "UPI-SUPER HIGHWAY LABS P-SHUTTL.RAZORPAY"
+                "UPI-SUPER HIGHWAY LABS P-SHUTTL.RAZORPAY",
+                "UPI-UBER INDIA SYSTEMS P-UBER@AXISBANK-U",
+                "UPI-OLACABS-OLACABS1@AXISBANK-UTIB000019"
             ],
             "loan": [
                 "NEFT DR-UTIB\\d{7}-MUM AXIS-SANDOZ - MU",
                 "ACH D- CCPC NEW DELHI-EMI-00000000000000",
-                "CHQ PAID-MICR CTS-NO-\\w*"
+                "ACH D- PIRAMALCAPITALANDHOU-PHHLNOI\\d{5}",
+                "CHQ PAID-MICR CTS-NO-\\w*",
+                "CHQ PAID-INWARD TRAN-PIRAMAL HOUSING FIN",
+                "RHDF\\d{10}/BILLDKPIRAMALCAPITAL"
             ],
             "insurance": [
-                "POS \\d{6}X{6}\\d{4} TPS\\*SBI LIFE INS"
+                "POS \\d{6}X{6}\\d{4} TPS\\*SBI LIFE INS",
+                "UPI-ACKO GENERAL INSURAN-ACKO\\.RAZORPAY@H"
             ],
             "investment": [
-                "UPI-\\d{12}-SBICARDSLM\\d{12}-"
+                "UPI-\\d{12}-SBICARDSLM\\d{12}-",
+                "FD THROUGH NET-\\d{14}:KARAN BAJA"
             ],
             "online_groceries": [
                 "POS \\d{6}X{6}\\d{4} DOORSTEP RETAIL",
@@ -41,7 +48,8 @@
                 "UPI-FAST AND FRESH"
             ],
             "online_food": [
-                "UPI-ZOMATO-ZOMATO-ORDER@PAYTM-PYTM012345"
+                "UPI-ZOMATO-ZOMATO-ORDER@PAYTM-PYTM012345",
+                "UPI-ZOMATO-ZOMATO@HDFCBANK-HDFC0000053-9"
             ],
             "online_shopping": [
                 "POS \\d{6}X{6}\\d{4} AMAZON",
@@ -58,7 +66,8 @@
             ],
             "entertainment": [
                 "POS \\d{6}X{6}\\d{4} EVENTBRITE",
-                "POS \\d{6}X{6}\\d{4} PVR LIMITED"
+                "POS \\d{6}X{6}\\d{4} PVR LIMITED",
+                "UPI-CHAAYOS ARDEE MALL-PAYTM-\\d{8}}@PA"
             ],
             "petrol": [
                 "POS \\d{6}X{6}\\d{4} OMSAIFILLINGSTAT",
@@ -71,7 +80,10 @@
             "bill_postpaid": [
                 "POS \\d{6}X{6}\\d{4} PAYU-WWW.VODAFON",
                 "UPI-VODAFONE IDEA LIMITE-VMSLPOSTPAID@HS",
-                "UPI-RELIANCE JIO INFOCOM-JIO@CITIBANK-CI"
+                "UPI-RELIANCE JIO INFOCOM-JIO@CITIBANK-CI",
+                "UPI-BILLDESKTEZ-BILLDESK\\.VODAFONE-POSTPA",
+                "UPI-FREECHARGE-FREECHARGE@FREECHARGE-UTI",
+                "UPI-RELIANCE RETAIL LTD-RELIANCEJIO@HDFC"
             ],
             "medical": [
                 "POS \\d{6}X{6}\\d{4} KAILASH HEALTH C",
@@ -79,23 +91,36 @@
                 "POS \\d{6}X{6}\\d{4} QIKWELL",
                 "POS \\d{6}X{6}\\d{4} UMA MEDICARE LTD",
                 "POS \\d{6}X{6}\\d{4} SR PHARMACY",
-                "UPI-PRACTO-PRACTO1.PAYU@HDFCBANK-HDFC000"
+                "UPI-PRACTO-PRACTO1.PAYU@HDFCBANK-HDFC000",
+                "UPI-LALPATH AJMER-\\d{10}@PAYTM-BARB0"
             ],
             "paytm": [
                 "POS \\d{6}X{6}\\d{4} PTM\\*PAYTM",
-                "UPI-X{6}\\d{4}-PYTM0123456-\\d{12}-"
+                "UPI-X{6}\\d{4}-PYTM0123456-\\d{12}-",
+                "UPI-PAYTM-ADD-MONEY@PAYTM-PYTM0123456-\\d{2}"
             ],
             "official": [
-                "UPI-UNIQUE INDENTIFICATI-RESIDENT.UIDAI.",
-                "POS \\d{6}X{6}\\d{4} PASSPORTSEVAMOPS"
+                "UPI-UNIQUE INDENTIFICATI-RESIDENT\\.UIDAI\\.",
+                "UPI-UNIQUE IDENTIFICATIO-RESIDENT\\.UIDAI\\.",
+                "POS \\d{6}X{6}\\d{4} PASSPORTSEVAMOPS",
+                "RTGS CHGS BRN INCL GST \\d{6}-[A-Z]{3}\\d{7}"
             ],
             "donations": [
                 "POS \\d{6}X{6}\\d{4} MILAAP"
             ],
+            "travel":   [
+                "UPI-OYO ROOMS-OYOROOMS.RZP@HDFCBANK-HDFC"
+            ],
             "transfer_others": [
+                "NEFT DR-[A-Z]{4}0[A-Z0-9]{6}-SL RETAIL FOREX-NETB",
+                "RTGS DR-[A-Z]{4}0[A-Z0-9]{6}-M/S VIPUL MOTORS PVT",
+                "IMPS-\\d{12}-VIPUL MOTORS PVT LTD-K",
+                "IMPS-\\d{12}-DIVYAMGARG-SBIN-XXXXXX",
                 "UPI-ASIF",
                 "UPI-KOMAL",
-                "UPI-MR RAMAN KUMAR-MONIRAMAN@OKAXIS-SCBL"
+                "UPI-MR RAMAN KUMAR-MONIRAMAN@OKAXIS-SCBL",
+                "UPI-KUMAR M-MANDEEP\\.KUMAR2005@OKSBI-HSBC",
+                "UPI-VISHNU SWAROOP LAL-VISHNUSWARUP2@OKA"
             ],
             "other_card_payments": [
                 "POS \\d{6}X{6}\\d{4}"
@@ -123,16 +148,21 @@
         "common": {
             "transfer_family": [
                 "NEFT DR-[A-Z]{4}0[A-Z0-9]{6}-PAPA SBI-SANDOZ - MU",
+                "NEFT DR-[A-Z]{4}0[A-Z0-9]{6}-PAPA SBI-NETBANK, MU",
                 "RTGS DR-[A-Z]{4}0[A-Z0-9]{6}-PAPA SBI-NETBANK",
+                "IMPS-\\d{12}-PAPA SBI-SBIN-X{7}\\d",
                 "RTGS DR-[A-Z]{4}0[A-Z0-9]{6}-MUM ICICI-NETBANK, M",
                 "NEFT DR-[A-Z]{4}0[A-Z0-9]{6}-MUM ICICI-NETBANK, M",
                 "NEFT DR-[A-Z]{4}0[A-Z0-9]{6}-PRIYA GABA-NETBANK,",
                 "IMPS-\\d{12}-PRIYA GABA-UTIB-XXXXXX",
                 "UPI-KAMAL",
-                "UPI-PRIYA GABA-PRIYA.GABA95@OKAXIS-UTIB0"
+                "UPI-PRIYA GABA-PRIYA.GABA95@OKAXIS-UTIB0",
+                "NEFT DR-[A-Z]{4}0[A-Z0-9]{6}-KB ICICI-NETBANK, MU"
             ],
             "transfer_friends": [
                 "NEFT DR-[A-Z]{4}0[A-Z0-9]{6}-PRIYANKAPAL-NETBANK,",
+                "NEFT DR-[A-Z]{4}0[A-Z0-9]{6}-MRIDUL KAKAR-NETBANK",
+                "IMPS-\\d{12}-MRIDUL KAKAR-ICIC-XXXX",
                 "IMPS-\\d{12}-RISHABH TIWARI-HDFC-XX",
                 "IMPS-\\d{12}-RISHABH TIWARI-HDFC-XX",
                 "UPI-PRABHAT BAHUKHANDI-PBAHUK@OKAXIS-UTI",
@@ -140,7 +170,9 @@
                 "UPI-MR BHARAT GABA S O T-BHARATGABA04@OK",
                 "UPI-ARUN KUMAR-MAIL.GAHLAWAT@OKHDFCBANK-",
                 "UPI-SHELLEY-\\d{10}@PAYTM-[A-Z]{4}0[A-Z0-9]{6}",
-                "UPI-ESHESH"
+                "IMPS-\\d{12}-PRERNA SHARMA-PUNB-XXX",
+                "UPI-ESHESH",
+                "UPI-MRIDUL"
             ]
         }
     },
