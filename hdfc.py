@@ -119,6 +119,7 @@ class HDFCParser(object):
         grand_total = 0
         header_str = '==================== categories ===================='
         print header_str
+        category_amounts = []
         for category_name, transaction_substrs in sorted(transaction_map.items()):
             total_transaction_amounts = 0
             for t_substr in transaction_substrs:
@@ -126,7 +127,10 @@ class HDFCParser(object):
             # only print non-zero amounts
             if total_transaction_amounts > 0:
                 grand_total += total_transaction_amounts
-                print format_str.format(total_transaction_amounts, category_name)
+                category_amounts.append((category_name, total_transaction_amounts))
+        category_amounts.sort(key=lambda x:x[1], reverse=True)
+        for ca in category_amounts:
+            print format_str.format(ca[1], ca[0])
         print '.' * len(header_str)
         print format_str.format(grand_total, 'TOTAL')
         print '=' * len(header_str) + '\n'
