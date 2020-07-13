@@ -67,7 +67,7 @@
             "entertainment": [
                 "POS \\d{6}X{6}\\d{4} EVENTBRITE",
                 "POS \\d{6}X{6}\\d{4} PVR LIMITED",
-                "UPI-CHAAYOS ARDEE MALL-PAYTM-\\d{8}}@PA"
+                "UPI-CHAAYOS ARDEE MALL-PAYTM-\\d{8}@PA"
             ],
             "petrol": [
                 "POS \\d{6}X{6}\\d{4} OMSAIFILLINGSTAT",
@@ -109,18 +109,8 @@
                 "POS \\d{6}X{6}\\d{4} MILAAP"
             ],
             "travel":   [
-                "UPI-OYO ROOMS-OYOROOMS.RZP@HDFCBANK-HDFC"
-            ],
-            "transfer_others": [
-                "NEFT DR-[A-Z]{4}0[A-Z0-9]{6}-SL RETAIL FOREX-NETB",
-                "RTGS DR-[A-Z]{4}0[A-Z0-9]{6}-M/S VIPUL MOTORS PVT",
-                "IMPS-\\d{12}-VIPUL MOTORS PVT LTD-K",
-                "IMPS-\\d{12}-DIVYAMGARG-SBIN-XXXXXX",
-                "UPI-ASIF",
-                "UPI-KOMAL",
-                "UPI-MR RAMAN KUMAR-MONIRAMAN@OKAXIS-SCBL",
-                "UPI-KUMAR M-MANDEEP\\.KUMAR2005@OKSBI-HSBC",
-                "UPI-VISHNU SWAROOP LAL-VISHNUSWARUP2@OKA"
+                "UPI-OYO ROOMS-OYOROOMS.RZP@HDFCBANK-HDFC",
+                "UPI-MOTOCRUIZER TECHNOLO-ONNBIKES@DBS-DB"
             ],
             "other_card_payments": [
                 "POS \\d{6}X{6}\\d{4}"
@@ -132,32 +122,43 @@
                 "CREDIT INTEREST CAPITALISED"
             ],
             "salary": [
-                "NEFT CR-\\w{4}\\d{7}-EIGHTFOLD AI INDIA P"
+                "NEFT CR-[A-Z]{4}0[A-Z0-9]{6}-EIGHTFOLD AI INDIA P",
+                "NEFT CR-[A-Z]{4}0[A-Z0-9]{6}-RIVIGO SERVICES PRIV"
             ],
             "refunds": [
                 "POS REF \\d{6}\\*{6}\\d{4}-",
-                "CRV POS \\d{6}\\*{6}\\d{4} OMSAIFILLINGSTA"
+                "POS \\d{6}\\*{6}\\d{4} RVSL DT - \\d{2}\/\\d{2}\/\\d{2}",
+                "NEFT RETURN-ACCOUNT DOES NOT EXIST-",
+                "CRV POS \\d{6}\\*{6}\\d{4} OMSAIFILLINGSTA",
+                "ACH C- [A-Z]{5}[0-9]{4}[A-Z]{1}-AY\\d{4}-\\d{2}-[A-Z]{2}\\d{10}",
+                "UPI-ZOMATO-ZOMATO@HDFCBANK-HDFC0000053-9"
             ],
             "fd": [
                 "PRINCIPAL AUTO REDEEM \\d{14}"
             ],
-            "dividends":    [
+            "dividends": [
                 "ACH C- SBI CARDS AND PAYMEN-\\d{6}"
+            ],
+            "cashback": [
+                "DEBIT CARD CASH BACK",
+                "UPI-GOOGLEPAY-GOOG-PAYMENT@OKAXIS-UTIB00"
             ]
         },
         "common": {
             "transfer_family": [
                 "NEFT DR-[A-Z]{4}0[A-Z0-9]{6}-PAPA SBI-SANDOZ - MU",
                 "NEFT DR-[A-Z]{4}0[A-Z0-9]{6}-PAPA SBI-NETBANK, MU",
-                "RTGS DR-[A-Z]{4}0[A-Z0-9]{6}-PAPA SBI-NETBANK",
-                "IMPS-\\d{12}-PAPA SBI-SBIN-X{7}\\d",
-                "RTGS DR-[A-Z]{4}0[A-Z0-9]{6}-MUM ICICI-NETBANK, M",
                 "NEFT DR-[A-Z]{4}0[A-Z0-9]{6}-MUM ICICI-NETBANK, M",
+                "NEFT CR-[A-Z]{4}0[A-Z0-9]{6}-NEELAM BAJAJ-KARAN B",
                 "NEFT DR-[A-Z]{4}0[A-Z0-9]{6}-PRIYA GABA-NETBANK,",
+                "NEFT DR-[A-Z]{4}0[A-Z0-9]{6}-ME ICICI-NETBANK, MU",
+                "NEFT DR-[A-Z]{4}0[A-Z0-9]{6}-KB ICICI-NETBANK, MU",
+                "RTGS DR-[A-Z]{4}0[A-Z0-9]{6}-PAPA SBI-NETBANK",
+                "RTGS DR-[A-Z]{4}0[A-Z0-9]{6}-MUM ICICI-NETBANK, M",
+                "IMPS-\\d{12}-PAPA SBI-SBIN-X{7}\\d",
                 "IMPS-\\d{12}-PRIYA GABA-UTIB-XXXXXX",
                 "UPI-KAMAL",
-                "UPI-PRIYA GABA-PRIYA.GABA95@OKAXIS-UTIB0",
-                "NEFT DR-[A-Z]{4}0[A-Z0-9]{6}-KB ICICI-NETBANK, MU"
+                "UPI-PRIYA GABA-PRIYA.GABA95@OKAXIS-UTIB0"
             ],
             "transfer_friends": [
                 "NEFT DR-[A-Z]{4}0[A-Z0-9]{6}-PRIYANKAPAL-NETBANK,",
@@ -165,14 +166,31 @@
                 "IMPS-\\d{12}-MRIDUL KAKAR-ICIC-XXXX",
                 "IMPS-\\d{12}-RISHABH TIWARI-HDFC-XX",
                 "IMPS-\\d{12}-RISHABH TIWARI-HDFC-XX",
+                "IMPS-\\d{12}-PRERNA SHARMA-PUNB-XXX",
                 "UPI-PRABHAT BAHUKHANDI-PBAHUK@OKAXIS-UTI",
                 "UPI-MOHIT DHINGRA-MOHITDHINGRA01@OKHDFCB",
                 "UPI-MR BHARAT GABA S O T-BHARATGABA04@OK",
                 "UPI-ARUN KUMAR-MAIL.GAHLAWAT@OKHDFCBANK-",
                 "UPI-SHELLEY-\\d{10}@PAYTM-[A-Z]{4}0[A-Z0-9]{6}",
-                "IMPS-\\d{12}-PRERNA SHARMA-PUNB-XXX",
+                "UPI-KHEYALI SANNIGRAHI-SANNIGRAHIKHEYALI",
+                "UPI-ANKIT JAT-ANKIT\\.JAT237@OKHDFCBANK-HD",
+                "UPI-ANIKESH G BHANDARKAR-ANIKESHB2012-1@",
+                "UPI-APARNA ARUN-APARNA.ARUN744@OKAXIS-UT",
                 "UPI-ESHESH",
                 "UPI-MRIDUL"
+            ],
+            "transfer_others": [
+                "NEFT DR-[A-Z]{4}0[A-Z0-9]{6}-SL RETAIL FOREX-NETB",
+                "RTGS DR-[A-Z]{4}0[A-Z0-9]{6}-M/S VIPUL MOTORS PVT",
+                "IMPS-\\d{12}-VIPUL MOTORS PVT LTD-K",
+                "IMPS-\\d{12}-DIVYAMGARG-SBIN-XXXXXX",
+                "IMPS-\\d{12}-MR VIBHA KANT SHARMA-H",
+                "IMPS-\\d{12}-MOTILAL OSWAL SECURI-H",
+                "UPI-ASIF",
+                "UPI-KOMAL",
+                "UPI-MR RAMAN KUMAR-MONIRAMAN@OKAXIS-SCBL",
+                "UPI-KUMAR M-MANDEEP\\.KUMAR2005@OKSBI-HSBC",
+                "UPI-VISHNU SWAROOP LAL-VISHNUSWARUP2@OKA"
             ]
         }
     },

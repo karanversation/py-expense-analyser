@@ -64,7 +64,7 @@ class HDFCParser(object):
                 continue
             # show warning if >2
             if n_amounts > 2 or n_dates > 2:
-                print 'WARNING: {} {}\n{}'.format(amounts, dates, line)
+                print 'WARNING (Heuristic expects 2 each of amounts and dates):\n{} {}\n{}'.format(amounts, dates, line)
 
             transaction_amt = amounts[0]
             date_len = len('01/01/20')
