@@ -136,7 +136,7 @@ class HDFCParser(object):
             # print unclassified transactions
             print line.strip()
 
-        format_str = '{0:9}  {1}'
+        format_str = '{0:>9}  {1}'
         grand_total = 0
         header_str = '==================== categories ===================='
         print header_str
@@ -151,9 +151,9 @@ class HDFCParser(object):
                 category_amounts.append((category_name, total_transaction_amounts))
         category_amounts.sort(key=lambda x:x[1], reverse=True)
         for ca in category_amounts:
-            print format_str.format(ca[1], ca[0])
+            print format_str.format(inr(ca[1]), ca[0])
         print '.' * len(header_str)
-        print format_str.format(grand_total, 'TOTAL')
+        print format_str.format(inr(grand_total), 'TOTAL')
         print '=' * len(header_str) + '\n'
 
         if detailed_category and detailed_category in transaction_map:
@@ -178,7 +178,7 @@ class HDFCParser(object):
         credit_monthly_grouped = groupby(credit_trans_lines, lambda x: x.date.month, True)
         total_months = sorted(list(set(debit_monthly_grouped.keys()) | set(credit_monthly_grouped.keys())))
         print '==================== Monthly Summary ===================='
-        format_str = '{:<9}\t{:<9}\t{:<9}\t{:<9}'
+        format_str = '{:<9}{:<14}{:<14}{:<14}'
         print format_str.format('Month', 'Debit', 'Credit', 'Diff')
         for month in total_months:
             total_debit = sum([tl.amount for tl in debit_monthly_grouped.get(month)]) if debit_monthly_grouped.get(month) else 0
