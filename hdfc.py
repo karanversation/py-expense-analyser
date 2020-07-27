@@ -1,8 +1,31 @@
 import re
 import json
+import decimal
 import argparse
-
+from datetime import datetime
 from collections import OrderedDict, defaultdict
+
+def inr(value):
+    value = str(int(value))
+    neg = False
+    if value.startswith('-'):
+        neg = True
+        value = value[1:]
+    prefix = '(-) ' if neg else ''
+    if len(value) <= 3:
+        return '{}{}'.format(prefix, value)
+    value_2 = str(value[:-3][::-1])
+    res = ','.join([value_2[i:i+2] for i in range(0, len(value_2), 2)])
+    return '{}{},{}'.format(prefix, res[::-1], value[-3:])
+
+def groupby(iterable, key, to_dict=False):
+    ret = OrderedDict()
+    for i in iterable:
+        k = key(i)
+        if k not in ret:
+            ret[k] = []
+        ret[k].append(i)
+    return ret if to_dict else list(ret.items())
 
 def str_amount_to_int(amount):
     return int(amount.replace(',', '')[:-3])
@@ -21,7 +44,7 @@ class TransactionLine(object):
     def __init__(self, line):
         parts2s = filter(None, line.split('  '))
         self.line = line
-        self.date = parts2s[0]
+        self.date = datetime.strptime(parts2s[0], '%d/%m/%y')
         self.description = parts2s[1]
         self.amount = str_amount_to_int(get_amounts_from_line(line)[0])
 
@@ -66,7 +89,6 @@ class HDFCParser(object):
             if n_amounts > 2 or n_dates > 2:
                 print 'WARNING (Heuristic expects 2 each of amounts and dates):\n{} {}\n{}'.format(amounts, dates, line)
 
-            transaction_amt = amounts[0]
             date_len = len('01/01/20')
             right_date = dates[-1]
             if dates[0] == dates[1]:
@@ -99,13 +121,12 @@ class HDFCParser(object):
 
         transaction_groups = defaultdict(list)
         for line in transaction_lines:
-            parts2s = filter(None, line.split('  '))
             tl = TransactionLine(line)
             found = False
             for t_substr in all_transaction_substrs:
                 try:
                     if re.match(t_substr, tl.description):
-                        transaction_groups[t_substr].append(TransactionLine(line))
+                        transaction_groups[t_substr].append(tl)
                         found = True
                         break
                 except:
@@ -150,6 +171,20 @@ class HDFCParser(object):
                     print '{0:9} {1}'.format(total_transaction_amount, t_substr)
                     print '=' * len(header_str)
 
+    def print_monthly_summary(self, debit_lines, credit_lines):
+        debit_trans_lines = [TransactionLine(dl) for dl in debit_lines]
+        credit_trans_lines = [TransactionLine(cl) for cl in credit_lines]
+        debit_monthly_grouped = groupby(debit_trans_lines, lambda x: x.date.month, True)
+        credit_monthly_grouped = groupby(credit_trans_lines, lambda x: x.date.month, True)
+        total_months = sorted(list(set(debit_monthly_grouped.keys()) | set(credit_monthly_grouped.keys())))
+        print '==================== Monthly Summary ===================='
+        format_str = '{:<9}\t{:<9}\t{:<9}\t{:<9}'
+        print format_str.format('Month', 'Debit', 'Credit', 'Diff')
+        for month in total_months:
+            total_debit = sum([tl.amount for tl in debit_monthly_grouped.get(month)]) if debit_monthly_grouped.get(month) else 0
+            total_credit = sum([tl.amount for tl in credit_monthly_grouped.get(month)]) if credit_monthly_grouped.get(month) else 0
+            print format_str.format(month, inr(total_debit), inr(total_credit), inr(total_credit-total_debit))
+
     def parse_txt(self, month, detailed_category, show_credit, display_args):
         category_transaction_map = self.cat_cfg.get('category_transaction_map', {})
         debit_map = category_transaction_map.get('debit', {})
@@ -168,6 +203,9 @@ class HDFCParser(object):
 
         # segregate transactions
         debit_lines, credit_lines = self._separate_debit_credit()
+
+        # monthly total summary
+        self.print_monthly_summary(debit_lines, credit_lines)
 
         if show_credit:
             HDFCParser.parse_transactions(credit_lines, credit_map, detailed_category, display_args)
