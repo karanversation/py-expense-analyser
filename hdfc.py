@@ -184,6 +184,7 @@ class HDFCParser(object):
             total_debit = sum([tl.amount for tl in debit_monthly_grouped.get(month)]) if debit_monthly_grouped.get(month) else 0
             total_credit = sum([tl.amount for tl in credit_monthly_grouped.get(month)]) if credit_monthly_grouped.get(month) else 0
             print format_str.format(month, inr(total_debit), inr(total_credit), inr(total_credit-total_debit))
+        print '========================================================='
 
     def parse_txt(self, month, detailed_category, show_credit, display_args):
         category_transaction_map = self.cat_cfg.get('category_transaction_map', {})
