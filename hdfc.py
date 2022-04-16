@@ -1,3 +1,5 @@
+# Author: Karan Bajaj (karanbajaj23@gmail.com)
+
 import re
 import json
 import decimal
