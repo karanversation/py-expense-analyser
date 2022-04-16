@@ -3,56 +3,9 @@
 import re
 import json
 import decimal
-import argparse
-from datetime import datetime
 from collections import OrderedDict, defaultdict
-
-
-def inr(value):
-    value = str(int(value))
-    neg = False
-    if value.startswith('-'):
-        neg = True
-        value = value[1:]
-    prefix = '(-) ' if neg else ''
-    if len(value) <= 3:
-        return '{}{}'.format(prefix, value)
-    value_2 = str(value[:-3][::-1])
-    res = ','.join([value_2[i:i+2] for i in range(0, len(value_2), 2)])
-    return '{}{},{}'.format(prefix, res[::-1], value[-3:])
-
-def groupby(iterable, key, to_dict=False):
-    ret = OrderedDict()
-    for i in iterable:
-        k = key(i)
-        if k not in ret:
-            ret[k] = []
-        ret[k].append(i)
-    return ret if to_dict else list(ret.items())
-
-def str_amount_to_int(amount):
-    return int(amount.replace(',', '')[:-3])
-
-def get_line_part(line, index):
-    return filter(None, line.split('  '))[index]
-
-def find_second_occurence(line, sub):
-    return line.find(sub, line.find(sub)+1)
-
-def get_amounts_from_line(line):
-    return re.findall(r'\d*,?\d+\,?\d{0,3}\.\d{2}', line)
-
-class TransactionLine(object):
-
-    def __init__(self, line):
-        parts2s = filter(None, line.split('  '))
-        self.line = line
-        self.date = datetime.strptime(parts2s[0], '%d/%m/%y')
-        self.description = parts2s[1]
-        self.amount = str_amount_to_int(get_amounts_from_line(line)[0])
-
-    def __repr__(self):
-        return self.line
+from utils import parsing_utils
+from utils.parsing_utils import inr, TransactionLine
 
 
 class HDFCParser(object):
@@ -65,10 +18,10 @@ class HDFCParser(object):
 
     def _filter_valid_transactions(self, month=None):
         re_str = r'\d+/\d+/\d+' if not month else r'\d+/{}/\d+'.format(month)
-        self.stmt_lines = [l.strip() for l in self.stmt_lines if re.search(re_str, get_line_part(l, 0))]
+        self.stmt_lines = [l.strip() for l in self.stmt_lines if re.search(re_str, parsing_utils.get_line_part(l, 0))]
 
     def _remove_ignore_transactions(self):
-        self.stmt_lines = [l for l in self.stmt_lines if not any(re.match(cat, get_line_part(l, 1)) for cat in self.cat_cfg.get('ignore_transactions', []))]
+        self.stmt_lines = [l for l in self.stmt_lines if not any(re.match(cat, parsing_utils.get_line_part(l, 1)) for cat in self.cat_cfg.get('ignore_transactions', []))]
 
     def _separate_debit_credit(self):
         """
@@ -80,7 +33,7 @@ class HDFCParser(object):
         debit_lines = []
         credit_lines = []
         for line in self.stmt_lines:
-            amounts = get_amounts_from_line(line)
+            amounts = parsing_utils.get_amounts_from_line(line)
             dates = re.findall(r'\d\d/\d\d/\d\d', line)
             n_amounts = len(amounts)
             n_dates = len(dates)
@@ -96,7 +49,7 @@ class HDFCParser(object):
             date_len = len('01/01/20')
             right_date = dates[-1]
             if dates[0] == dates[1]:
-                lpos = find_second_occurence(line, right_date)+date_len-1
+                lpos = parsing_utils.find_second_occurence(line, right_date)+date_len-1
             else:
                 lpos = line.find(right_date)+date_len-1
             rpos = line.find(amounts[1])
@@ -178,8 +131,8 @@ class HDFCParser(object):
     def print_monthly_summary(self, debit_lines, credit_lines):
         debit_trans_lines = [TransactionLine(dl) for dl in debit_lines]
         credit_trans_lines = [TransactionLine(cl) for cl in credit_lines]
-        debit_monthly_grouped = groupby(debit_trans_lines, lambda x: x.date.month, True)
-        credit_monthly_grouped = groupby(credit_trans_lines, lambda x: x.date.month, True)
+        debit_monthly_grouped = parsing_utils.groupby(debit_trans_lines, lambda x: x.date.month, True)
+        credit_monthly_grouped = parsing_utils.groupby(credit_trans_lines, lambda x: x.date.month, True)
         total_months = sorted(list(set(debit_monthly_grouped.keys()) | set(credit_monthly_grouped.keys())))
         print '==================== Monthly Summary ===================='
         format_str = '{:<9}{:<14}{:<14}{:<14}'
@@ -217,24 +170,3 @@ class HDFCParser(object):
         else:
             HDFCParser.parse_transactions(debit_lines, debit_map, detailed_category, display_args)
 
-def create_args_parser():
-    parser = argparse.ArgumentParser(description='Categorize expenses from bank statement')
-    parser.add_argument('--file', required=True, type=str, help='Bank statement file')
-    parser.add_argument('--config', type=str, default='./configs/hdfc.json', help='Bank expense config')
-    parser.add_argument('--month', required=False, type=str, help='Month (optional)')
-    parser.add_argument('--all', required=False, action='store_true', help='Pass to print all expenses')
-    parser.add_argument('--category', required=False, type=str, help='Category (optional)')
-    parser.add_argument('--category_all', required=False, type=str, help='Show all transaction lines for category (optional)')
-    parser.add_argument('--full_line', required=False, action='store_true', help='Show full transaction line')
-    parser.add_argument('--credit', required=False, action='store_true', help='Show credit transactions')
-    return parser
-
-if __name__ == "__main__":
-    args = create_args_parser().parse_args()
-    parser = HDFCParser(args.file, args.config)
-    display_args = {
-        'show_all': args.all,
-        'show_category_all': args.category_all,
-        'show_full_line': args.full_line
-    }
-    parser.parse_txt(args.month, args.category, args.credit, display_args)
