@@ -5,6 +5,7 @@ import argparse
 from datetime import datetime
 from collections import OrderedDict, defaultdict
 
+
 def inr(value):
     value = str(int(value))
     neg = False
@@ -50,6 +51,7 @@ class TransactionLine(object):
 
     def __repr__(self):
         return self.line
+
 
 class HDFCParser(object):
 
@@ -216,7 +218,7 @@ class HDFCParser(object):
 def create_args_parser():
     parser = argparse.ArgumentParser(description='Categorize expenses from bank statement')
     parser.add_argument('--file', required=True, type=str, help='Bank statement file')
-    parser.add_argument('--config', required=True, type=str, help='Bank expense config')
+    parser.add_argument('--config', type=str, default='./configs/hdfc.json', help='Bank expense config')
     parser.add_argument('--month', required=False, type=str, help='Month (optional)')
     parser.add_argument('--all', required=False, action='store_true', help='Pass to print all expenses')
     parser.add_argument('--category', required=False, type=str, help='Category (optional)')
