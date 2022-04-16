@@ -1,21 +1,22 @@
 # pyStatementAnalyser
-Python-based bank statement analyser
+Python-based bank statement analyser\
+Currently it only supports parsing HDFC bank statements downloaded in .txt format
 
 ## Usage
 
 ```shell
-$ python hdfc.py --file <file_path> --month MM --category <category_name>
+$ python analyse.py --file <file_path> --month MM --category <category_name>
 ```
 With optional args
 
 ```shell
-$ python hdfc.py --file <file_path> --month MM --category <category_name> --all --category_all --full_line --credit
+$ python analyse.py --file <file_path> --month MM --category <category_name> --all --category_all --full_line --credit
 ```
 
 ### Example
 
 ```shell
-$ python hdfc.py --file 95380512_7845559435835.txt --month 05 --category online_shopping
+$ python analyse.py --file 95380512_7845559435835.txt --month 05 --category online_shopping
 ```
 
 Output -
