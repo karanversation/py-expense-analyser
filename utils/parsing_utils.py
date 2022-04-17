@@ -30,8 +30,11 @@ def groupby(iterable, key, to_dict=False):
 def _str_amount_to_int(amount):
     return int(amount.replace(',', '')[:-3])
 
+def split_line(line):
+    return filter(None, line.split('  '))
+
 def get_line_part(line, index):
-    return filter(None, line.split('  '))[index]
+    return split_line(line)[index]
 
 def find_second_occurence(line, sub):
     return line.find(sub, line.find(sub)+1)
@@ -43,8 +46,8 @@ def get_amounts_from_line(line):
 class TransactionLine(object):
 
     def __init__(self, line):
-        parts2s = filter(None, line.split('  '))
         self.line = line
+        parts2s = split_line(line)
         self.date = datetime.strptime(parts2s[0], '%d/%m/%y')
         self.description = parts2s[1]
         self.amount = _str_amount_to_int(get_amounts_from_line(line)[0])
@@ -52,3 +55,13 @@ class TransactionLine(object):
     def __repr__(self):
         return self.line
 
+
+class ParsedStatement(object):
+
+    def __init__(self, stmt_filepath):
+        self.stmt_filepath = stmt_filepath
+        self.stmt_file = open(self.stmt_filepath, 'r')
+        self.stmt_lines = self.stmt_file.readlines()
+
+    def __repr__(self):
+        return 'ParsedStatement({})'.format(self.stmt_filepath)

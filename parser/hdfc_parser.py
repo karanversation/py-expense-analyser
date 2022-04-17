@@ -5,60 +5,14 @@ import json
 import decimal
 from collections import OrderedDict, defaultdict
 from utils import parsing_utils
-from utils.parsing_utils import inr, TransactionLine
+from utils.parsing_utils import inr, TransactionLine, ParsedStatement
 
 
 class HDFCParser(object):
 
-    def __init__(self, stmt_filepath, cfg_filepath):
-        self.stmt_file = open(stmt_filepath, 'r')
+    def __init__(self, cfg_filepath):
         self.cfg_file = open(cfg_filepath, 'r')
-        self.stmt_lines = self.stmt_file.readlines()
         self.cat_cfg = json.load(self.cfg_file, object_pairs_hook=OrderedDict)
-
-    def _filter_valid_transactions(self, month=None):
-        re_str = r'\d+/\d+/\d+' if not month else r'\d+/{}/\d+'.format(month)
-        self.stmt_lines = [l.strip() for l in self.stmt_lines if re.search(re_str, parsing_utils.get_line_part(l, 0))]
-
-    def _remove_ignore_transactions(self):
-        self.stmt_lines = [l for l in self.stmt_lines if not any(re.match(cat, parsing_utils.get_line_part(l, 1)) for cat in self.cat_cfg.get('ignore_transactions', []))]
-
-    def _separate_debit_credit(self):
-        """
-        Heuristic:
-        Compare space b/w transaction amount, date and balance
-        Amount closer to date -> debit
-        Amount closer to balance -> credit
-        """
-        debit_lines = []
-        credit_lines = []
-        for line in self.stmt_lines:
-            amounts = parsing_utils.get_amounts_from_line(line)
-            dates = re.findall(r'\d\d/\d\d/\d\d', line)
-            n_amounts = len(amounts)
-            n_dates = len(dates)
-
-            # skip line if amounts/dates <2
-            if n_amounts < 2 or n_dates < 2:
-                print 'ERROR: {} {}\n{}'.format(amounts, dates, line)
-                continue
-            # show warning if >2
-            if n_amounts > 2 or n_dates > 2:
-                print 'WARNING (Heuristic expects 2 each of amounts and dates):\n{} {}\n{}'.format(amounts, dates, line)
-
-            date_len = len('01/01/20')
-            right_date = dates[-1]
-            if dates[0] == dates[1]:
-                lpos = parsing_utils.find_second_occurence(line, right_date)+date_len-1
-            else:
-                lpos = line.find(right_date)+date_len-1
-            rpos = line.find(amounts[1])
-            amount_pos = line.find(amounts[0])
-            if (amount_pos-lpos) < (rpos-(amount_pos+len(amounts[0]))):
-                debit_lines.append(line)
-            else:
-                credit_lines.append(line)
-        return debit_lines, credit_lines
 
     @staticmethod
     def _trim_lines(lines):
@@ -128,7 +82,7 @@ class HDFCParser(object):
                     print '{0:9} {1}'.format(total_transaction_amount, t_substr)
                     print '=' * len(header_str)
 
-    def print_monthly_summary(self, debit_lines, credit_lines):
+    def _print_monthly_summary(self, debit_lines, credit_lines):
         debit_trans_lines = [TransactionLine(dl) for dl in debit_lines]
         credit_trans_lines = [TransactionLine(cl) for cl in credit_lines]
         debit_monthly_grouped = parsing_utils.groupby(debit_trans_lines, lambda x: x.date.month, True)
@@ -143,7 +97,51 @@ class HDFCParser(object):
             print format_str.format(month, inr(total_debit), inr(total_credit), inr(total_credit-total_debit))
         print '========================================================='
 
-    def parse_txt(self, month, detailed_category, show_credit, display_args):
+    def _separate_debit_credit(self, ps_obj):
+        """
+        Heuristic:
+        Compare space b/w transaction amount, date and balance
+        Amount closer to date -> debit
+        Amount closer to balance -> credit
+        """
+        debit_lines = []
+        credit_lines = []
+        for line in ps_obj.stmt_lines:
+            amounts = parsing_utils.get_amounts_from_line(line)
+            dates = re.findall(r'\d\d/\d\d/\d\d', line)
+            n_amounts = len(amounts)
+            n_dates = len(dates)
+
+            # skip line if amounts/dates <2
+            if n_amounts < 2 or n_dates < 2:
+                print 'ERROR: {} {}\n{}'.format(amounts, dates, line)
+                continue
+            # show warning if >2
+            if n_amounts > 2 or n_dates > 2:
+                print 'WARNING (Heuristic expects 2 each of amounts and dates):\n{} {}\n{}'.format(amounts, dates, line)
+
+            date_len = len('01/01/20')
+            right_date = dates[-1]
+            if dates[0] == dates[1]:
+                lpos = parsing_utils.find_second_occurence(line, right_date)+date_len-1
+            else:
+                lpos = line.find(right_date)+date_len-1
+            rpos = line.find(amounts[1])
+            amount_pos = line.find(amounts[0])
+            if (amount_pos-lpos) < (rpos-(amount_pos+len(amounts[0]))):
+                debit_lines.append(line)
+            else:
+                credit_lines.append(line)
+        return debit_lines, credit_lines
+
+    def _filter_lines(self, ps_obj, month=None):
+        re_str = r'\d+/\d+/\d+' if not month else r'\d+/{}/\d+'.format(month)
+        # filter lines by regex (include check for month)
+        ps_obj.stmt_lines = [l.strip() for l in ps_obj.stmt_lines if re.search(re_str, parsing_utils.get_line_part(l, 0))]
+        # filter out lines that are part of ignore_transactions regex collection
+        ps_obj.stmt_lines = [l for l in ps_obj.stmt_lines if not any(re.match(cat, parsing_utils.get_line_part(l, 1)) for cat in self.cat_cfg.get('ignore_transactions', []))]
+
+    def _populate_category_maps(self):
         category_transaction_map = self.cat_cfg.get('category_transaction_map', {})
         debit_map = category_transaction_map.get('debit', {})
         credit_map = category_transaction_map.get('credit', {})
@@ -152,18 +150,21 @@ class HDFCParser(object):
         common_map = category_transaction_map.get('common', {})
         credit_map.update(common_map)
         debit_map.update(common_map)
+        return credit_map, debit_map
 
-        # filter step
-        self._filter_valid_transactions(month)
-        self._remove_ignore_transactions()
+    def parse_txt(self, stmt_filepath, month, detailed_category, show_credit, display_args):
+        ps_obj = ParsedStatement(stmt_filepath)
+        credit_map, debit_map = self._populate_category_maps()
+
+        self._filter_lines(ps_obj, month)
 
         # TODO handle removal of reversed transactions
 
         # segregate transactions
-        debit_lines, credit_lines = self._separate_debit_credit()
+        debit_lines, credit_lines = self._separate_debit_credit(ps_obj)
 
         # monthly total summary
-        self.print_monthly_summary(debit_lines, credit_lines)
+        self._print_monthly_summary(debit_lines, credit_lines)
 
         if show_credit:
             HDFCParser.parse_transactions(credit_lines, credit_map, detailed_category, display_args)

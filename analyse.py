@@ -18,11 +18,11 @@ def create_args_parser():
 
 if __name__ == "__main__":
     args = create_args_parser().parse_args()
-    parser = HDFCParser(args.file, args.config)
+    parser = HDFCParser(args.config)
     display_args = {
         'show_all': args.all,
         'show_category_all': args.category_all,
         'show_full_line': args.full_line
     }
-    parser.parse_txt(args.month, args.category, args.credit, display_args)
+    parser.parse_txt(args.file, args.month, args.category, args.credit, display_args)
 
