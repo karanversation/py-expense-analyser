@@ -152,11 +152,10 @@ class HDFCParser(object):
         debit_map.update(common_map)
         return credit_map, debit_map
 
-    def parse_txt(self, stmt_filepath, month, detailed_category, show_credit, display_args):
-        ps_obj = ParsedStatement(stmt_filepath)
+    def parse_statement(self, ps_obj, filter_by, display_args):
         credit_map, debit_map = self._populate_category_maps()
 
-        self._filter_lines(ps_obj, month)
+        self._filter_lines(ps_obj, filter_by['month'])
 
         # TODO handle removal of reversed transactions
 
@@ -166,8 +165,10 @@ class HDFCParser(object):
         # monthly total summary
         self._print_monthly_summary(debit_lines, credit_lines)
 
+        show_credit = filter_by['type'] in ('credit', 'all')
+        show_debit = filter_by['type'] in ('debit', 'all')
         if show_credit:
-            HDFCParser.parse_transactions(credit_lines, credit_map, detailed_category, display_args)
-        else:
-            HDFCParser.parse_transactions(debit_lines, debit_map, detailed_category, display_args)
+            HDFCParser.parse_transactions(credit_lines, credit_map, filter_by['category'], display_args)
+        if show_debit:
+            HDFCParser.parse_transactions(debit_lines, debit_map, filter_by['category'], display_args)
 
