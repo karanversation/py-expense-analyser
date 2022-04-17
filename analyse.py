@@ -20,8 +20,8 @@ def create_args_parser():
 if __name__ == "__main__":
     args = create_args_parser().parse_args()
     parser = HDFCParser(args.config)
-    display_args = {'show_all': args.all, 'show_full_line': args.full_line}
-    filter_by = {'month': args.month, 'category': args.category, 'type': args.type}
     ps_obj = parsing_utils.ParsedStatement(args.file)
+    filter_by = {'month': args.month, 'category': args.category, 'type': args.type}
+    display_args = {'show_all': args.all, 'show_full_line': args.full_line}
     parser.parse_statement(ps_obj, filter_by, display_args)
 
