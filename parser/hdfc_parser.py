@@ -124,9 +124,6 @@ class HDFCParser(object):
             if n_amounts < 2 or n_dates < 2:
                 print 'ERROR: {} {}\n{}'.format(amounts, dates, line)
                 continue
-            # show warning if >2
-            if n_amounts > 2 or n_dates > 2:
-                print 'WARNING (Heuristic expects 2 each of amounts and dates):\n{} {}\n{}\n'.format(amounts, dates, line)
 
             date_len = len('01/01/20')
             right_date = dates[-1]
@@ -134,8 +131,15 @@ class HDFCParser(object):
                 lpos = parsing_utils.find_second_occurence(line, right_date)+date_len-1
             else:
                 lpos = line.find(right_date)+date_len-1
-            rpos = line.find(amounts[1])
-            amount_pos = line.find(amounts[0])
+            """
+            NOTE: There could be rows where n_amounts > 2
+            Eg:
+            05/04/21  CRV POS 512967******5730 HPCL 0.75% CASH  000000000000000   04/04/21                                  7.50        12345.67
+            Here amounts = [0.75, 7.50, 12345.67]
+            By default we pick amounts[-1] as rpos and amounts[-2] as amount_pos below
+            """
+            rpos = line.find(amounts[-1])
+            amount_pos = line.find(amounts[-2])
             if (amount_pos-lpos) < (rpos-(amount_pos+len(amounts[0]))):
                 debit_lines.append(line)
             else:
