@@ -37,9 +37,6 @@
                 "FD THROUGH NET-\\d{14}:KARAN BAJA",
                 "\\d{14}- RD INSTALLMENT-"
             ],
-            "tanishq_gh": [
-                "EAW-\\d{6}X{6}\\d{4}-BWCW3873-NOIDA"
-            ],
             "online_groceries": [
                 "POS \\d{6}X{6}\\d{4} DOORSTEP RETAIL",
                 "POS \\d{6}X{6}\\d{4} PAYU-WWW.BIGBASK",
