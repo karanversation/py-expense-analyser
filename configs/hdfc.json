@@ -179,18 +179,13 @@
                 "UPI-ESHESH",
                 "UPI-MRIDUL"
             ],
-            "transfer_others": [
-                "NEFT DR-[A-Z]{4}0[A-Z0-9]{6}-SL RETAIL FOREX-NETB",
-                "RTGS DR-[A-Z]{4}0[A-Z0-9]{6}-M/S VIPUL MOTORS PVT",
-                "IMPS-\\d{12}-VIPUL MOTORS PVT LTD-K",
-                "IMPS-\\d{12}-DIVYAMGARG-SBIN-XXXXXX",
-                "IMPS-\\d{12}-MR VIBHA KANT SHARMA-H",
-                "IMPS-\\d{12}-MOTILAL OSWAL SECURI-H",
-                "UPI-ASIF",
-                "UPI-KOMAL",
-                "UPI-MR RAMAN KUMAR-MONIRAMAN@OKAXIS-SCBL",
-                "UPI-KUMAR M-MANDEEP\\.KUMAR2005@OKSBI-HSBC",
-                "UPI-VISHNU SWAROOP LAL-VISHNUSWARUP2@OKA"
+            "other_bank_transfers": [
+                "NEFT DR-[A-Z]{4}0[A-Z0-9]{6}-",
+                "RTGS DR-[A-Z]{4}0[A-Z0-9]{6}-",
+                "IMPS-\\d{12}-"
+            ],
+            "other_upi": [
+                "UPI-"
             ]
         }
     },
