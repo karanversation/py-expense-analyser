@@ -24,13 +24,15 @@ class HDFCParser(object):
         return res_lines
 
     @staticmethod
-    def parse_transactions(transaction_lines, transaction_map, detailed_category, display_args):
+    def parse_transactions(transaction_type, transaction_lines, transaction_map, detailed_category, display_args):
+        print '\n############################ {} ############################'.format(transaction_type)
         transaction_lines = HDFCParser._trim_lines(transaction_lines) if not display_args.get('show_full_line') else transaction_lines
         all_transaction_substrs = []
         for _, transaction_substrs in transaction_map.items():
             all_transaction_substrs.extend(transaction_substrs)
 
         transaction_groups = defaultdict(list)
+        unclassified_lines = []
         for line in transaction_lines:
             tl = TransactionLine(line)
             found = False
@@ -44,8 +46,13 @@ class HDFCParser(object):
                     print 'EXCEPTION with {}'.format(t_substr)
             if found and not display_args.get('show_all'):
                 continue
-            # print unclassified transactions
-            print line.strip()
+            unclassified_lines.append(line.strip())
+
+        # print unclassified transactions
+        if unclassified_lines:
+            print '---------------------- UNCLASSIFIED ------------------------'
+            print '\n'.join(unclassified_lines)
+            print '------------------------------------------------------------'
 
         format_str = '{0:>9}  {1}'
         grand_total = 0
@@ -65,7 +72,7 @@ class HDFCParser(object):
             print format_str.format(inr(ca[1]), ca[0])
         print '.' * len(header_str)
         print format_str.format(inr(grand_total), 'TOTAL')
-        print '=' * len(header_str) + '\n'
+        print '=' * len(header_str)
 
         if detailed_category and detailed_category in transaction_map:
             header_str = '==================== {} ===================='.format(detailed_category)
@@ -81,6 +88,7 @@ class HDFCParser(object):
                     print '.' * len(header_str)
                     print '{0:9} {1}'.format(total_transaction_amount, t_substr)
                     print '=' * len(header_str)
+        print '################################################################\n'
 
     def _print_monthly_summary(self, debit_lines, credit_lines):
         debit_trans_lines = [TransactionLine(dl) for dl in debit_lines]
@@ -88,14 +96,14 @@ class HDFCParser(object):
         debit_monthly_grouped = parsing_utils.groupby(debit_trans_lines, lambda x: x.date.month, True)
         credit_monthly_grouped = parsing_utils.groupby(credit_trans_lines, lambda x: x.date.month, True)
         total_months = sorted(list(set(debit_monthly_grouped.keys()) | set(credit_monthly_grouped.keys())))
-        print '==================== Monthly Summary ===================='
+        print '###################### Monthly Summary #########################'
         format_str = '{:<9}{:<14}{:<14}{:<14}'
         print format_str.format('Month', 'Debit(-)', 'Credit(+)', 'Diff')
         for month in total_months:
             total_debit = sum([tl.amount for tl in debit_monthly_grouped.get(month)]) if debit_monthly_grouped.get(month) else 0
             total_credit = sum([tl.amount for tl in credit_monthly_grouped.get(month)]) if credit_monthly_grouped.get(month) else 0
             print format_str.format(month, inr(total_debit), inr(total_credit), inr(total_credit-total_debit))
-        print '========================================================='
+        print '################################################################'
 
     def _separate_debit_credit(self, ps_obj):
         """
@@ -118,7 +126,7 @@ class HDFCParser(object):
                 continue
             # show warning if >2
             if n_amounts > 2 or n_dates > 2:
-                print 'WARNING (Heuristic expects 2 each of amounts and dates):\n{} {}\n{}'.format(amounts, dates, line)
+                print 'WARNING (Heuristic expects 2 each of amounts and dates):\n{} {}\n{}\n'.format(amounts, dates, line)
 
             date_len = len('01/01/20')
             right_date = dates[-1]
@@ -168,7 +176,7 @@ class HDFCParser(object):
         show_credit = filter_by['type'] in ('credit', 'all')
         show_debit = filter_by['type'] in ('debit', 'all')
         if show_credit:
-            HDFCParser.parse_transactions(credit_lines, credit_map, filter_by['category'], display_args)
+            HDFCParser.parse_transactions('Credit', credit_lines, credit_map, filter_by['category'], display_args)
         if show_debit:
-            HDFCParser.parse_transactions(debit_lines, debit_map, filter_by['category'], display_args)
+            HDFCParser.parse_transactions('Debit', debit_lines, debit_map, filter_by['category'], display_args)
 
