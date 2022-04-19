@@ -98,7 +98,7 @@ class HDFCParser(object):
         total_months = sorted(list(set(debit_monthly_grouped.keys()) | set(credit_monthly_grouped.keys())))
         print '###################### Monthly Summary #########################'
         format_str = '{:<9}{:<14}{:<14}{:<14}'
-        print format_str.format('Month', 'Debit(-)', 'Credit(+)', 'Diff')
+        print format_str.format('Month', 'Debit(-)', 'Credit(+)', 'Savings')
         for month in total_months:
             total_debit = sum([tl.amount for tl in debit_monthly_grouped.get(month)]) if debit_monthly_grouped.get(month) else 0
             total_credit = sum([tl.amount for tl in credit_monthly_grouped.get(month)]) if credit_monthly_grouped.get(month) else 0
