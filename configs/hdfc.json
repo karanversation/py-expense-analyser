@@ -32,7 +32,8 @@
             ],
             "investment": [
                 "UPI-\\d{12}-SBICARDSLM\\d{12}-",
-                "FD THROUGH NET-\\d{14}:KARAN BAJA"
+                "FD THROUGH NET-\\d{14}:KARAN BAJA",
+                "\\d{14}- RD INSTALLMENT-"
             ],
             "online_groceries": [
                 "POS \\d{6}X{6}\\d{4} DOORSTEP RETAIL",
