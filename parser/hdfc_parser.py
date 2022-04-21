@@ -5,6 +5,7 @@ import json
 import decimal
 from collections import OrderedDict, defaultdict
 from utils import parsing_utils
+from utils import format_utils
 from utils.parsing_utils import inr, TransactionLine, ParsedStatement
 
 
@@ -25,7 +26,7 @@ class HDFCParser(object):
 
     @staticmethod
     def parse_transactions(transaction_type, transaction_lines, transaction_map, detailed_category, display_args):
-        print '\n############################ {} ############################'.format(transaction_type)
+        format_utils.print_title_boundary(transaction_type, char='#')
         transaction_lines = HDFCParser._trim_lines(transaction_lines) if not display_args.get('show_full_line') else transaction_lines
         all_transaction_substrs = []
         for _, transaction_substrs in transaction_map.items():
@@ -50,14 +51,13 @@ class HDFCParser(object):
 
         # print unclassified transactions
         if unclassified_lines:
-            print '---------------------- UNCLASSIFIED ------------------------'
+            format_utils.print_title_boundary('UNCLASSIFIED', char='-')
             print '\n'.join(unclassified_lines)
-            print '------------------------------------------------------------'
+            format_utils.print_boundary('-')
 
         format_str = '{0:>9}  {1}'
         grand_total = 0
-        header_str = '==================== categories ===================='
-        print header_str
+        format_utils.print_title_boundary('categories', char='=')
         category_amounts = []
         for category_name, transaction_substrs in sorted(transaction_map.items()):
             total_transaction_amounts = 0
@@ -70,13 +70,12 @@ class HDFCParser(object):
         category_amounts.sort(key=lambda x:x[1], reverse=True)
         for ca in category_amounts:
             print format_str.format(inr(ca[1]), ca[0])
-        print '.' * len(header_str)
+        format_utils.print_boundary('.')
         print format_str.format(inr(grand_total), 'TOTAL')
-        print '=' * len(header_str)
+        format_utils.print_boundary('=')
 
         if detailed_category and detailed_category in transaction_map:
-            header_str = '==================== {} ===================='.format(detailed_category)
-            print header_str
+            format_utils.print_title_boundary(detailed_category, char='=')
             grand_total = 0
             for t_substr in sorted(transaction_map.get(detailed_category, [])):
                 total_transaction_amount = sum([tl.amount for tl in transaction_groups.get(t_substr, [])])
@@ -85,10 +84,11 @@ class HDFCParser(object):
                     # print transaction lines
                     for tl in transaction_groups.get(t_substr):
                         print tl
-                    print '.' * len(header_str)
+                    format_utils.print_boundary('.')
                     print '{0:9} {1}'.format(total_transaction_amount, t_substr)
-                    print '=' * len(header_str)
-        print '################################################################\n'
+                    format_utils.print_boundary('=')
+        format_utils.print_boundary('#')
+        print ''
 
     def _print_monthly_summary(self, debit_lines, credit_lines):
         debit_trans_lines = [TransactionLine(dl) for dl in debit_lines]
@@ -96,14 +96,15 @@ class HDFCParser(object):
         debit_monthly_grouped = parsing_utils.groupby(debit_trans_lines, lambda x: x.date.month, True)
         credit_monthly_grouped = parsing_utils.groupby(credit_trans_lines, lambda x: x.date.month, True)
         total_months = sorted(list(set(debit_monthly_grouped.keys()) | set(credit_monthly_grouped.keys())))
-        print '###################### Monthly Summary #########################'
+        format_utils.print_title_boundary('Monthly Summary', char='#')
         format_str = '{:<9}{:<14}{:<14}{:<14}'
         print format_str.format('Month', 'Debit(-)', 'Credit(+)', 'Savings')
         for month in total_months:
             total_debit = sum([tl.amount for tl in debit_monthly_grouped.get(month)]) if debit_monthly_grouped.get(month) else 0
             total_credit = sum([tl.amount for tl in credit_monthly_grouped.get(month)]) if credit_monthly_grouped.get(month) else 0
             print format_str.format(month, inr(total_debit), inr(total_credit), inr(total_credit-total_debit))
-        print '################################################################'
+        format_utils.print_boundary('#')
+        print ''
 
     def _separate_debit_credit(self, ps_obj):
         """
