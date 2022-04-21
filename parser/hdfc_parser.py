@@ -90,18 +90,25 @@ class HDFCParser(object):
         format_utils.print_boundary('#')
         print ''
 
-    def _print_monthly_summary(self, debit_lines, credit_lines):
+    def _get_monthly_summary(self, debit_lines, credit_lines):
+        summary_dict = {}
         debit_trans_lines = [TransactionLine(dl) for dl in debit_lines]
         credit_trans_lines = [TransactionLine(cl) for cl in credit_lines]
         debit_monthly_grouped = parsing_utils.groupby(debit_trans_lines, lambda x: x.date.month, True)
         credit_monthly_grouped = parsing_utils.groupby(credit_trans_lines, lambda x: x.date.month, True)
         total_months = sorted(list(set(debit_monthly_grouped.keys()) | set(credit_monthly_grouped.keys())))
-        format_utils.print_title_boundary('Monthly Summary', char='#')
-        format_str = '{:<9}{:<14}{:<14}{:<14}'
-        print format_str.format('Month', 'Debit(-)', 'Credit(+)', 'Savings')
         for month in total_months:
             total_debit = sum([tl.amount for tl in debit_monthly_grouped.get(month)]) if debit_monthly_grouped.get(month) else 0
             total_credit = sum([tl.amount for tl in credit_monthly_grouped.get(month)]) if credit_monthly_grouped.get(month) else 0
+            summary_dict[month] = (total_debit, total_credit)
+        return summary_dict
+
+    def _print_monthly_summary(self, summary_dict):
+        format_utils.print_title_boundary('Monthly Summary', char='#')
+        format_str = '{:<9}{:<14}{:<14}{:<14}'
+        print format_str.format('Month', 'Debit(-)', 'Credit(+)', 'Savings')
+        for month, amounts in summary_dict.items():
+            total_debit, total_credit = amounts
             print format_str.format(month, inr(total_debit), inr(total_credit), inr(total_credit-total_debit))
         format_utils.print_boundary('#')
         print ''
@@ -176,7 +183,8 @@ class HDFCParser(object):
         debit_lines, credit_lines = self._separate_debit_credit(ps_obj)
 
         # monthly total summary
-        self._print_monthly_summary(debit_lines, credit_lines)
+        summary_dict = self._get_monthly_summary(debit_lines, credit_lines)
+        self._print_monthly_summary(summary_dict)
 
         show_credit = filter_by['type'] in ('credit', 'all')
         show_debit = filter_by['type'] in ('debit', 'all')
