@@ -95,8 +95,8 @@ class HDFCParser(object):
         total_credit = 0
         total_debit = 0
         for amounts in summary_dict.values():
-            total_credit += amounts[0]
-            total_debit += amounts[1]
+            total_debit += amounts[0]
+            total_credit += amounts[1]
         return total_credit, total_debit
 
     def _print_monthly_summary(self, summary_dict):
