@@ -9,7 +9,8 @@
                 "CHQ PAID-TRANSFER IN-KARETAKER SOLUTIONS",
                 "POS \\d{6}X{6}\\d{4} SOCIETY CONNECT",
                 "\\d{14}-TPT-TOWER A1 FLAT 1004-AV",
-                "\\d{14}-TPT-RANGOLI A1 1004-AVALO"
+                "\\d{14}-TPT-RANGOLI A1 1004-AVALO",
+                "EAW-\\d{6}X{6}\\d{4}-BWCW3873-NOIDA"
             ],
             "cabs": [
                 "POS \\d{6}X{6}\\d{4} UBER",
