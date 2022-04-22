@@ -10,7 +10,8 @@
                 "POS \\d{6}X{6}\\d{4} SOCIETY CONNECT",
                 "\\d{14}-TPT-TOWER A1 FLAT 1004-AV",
                 "\\d{14}-TPT-RANGOLI A1 1004-AVALO",
-                "EAW-\\d{6}X{6}\\d{4}-BWCW3873-NOIDA"
+                "EAW-\\d{6}X{6}\\d{4}-[A-Z]{4}\\d{4}-NOIDA",
+                "EAW-\\d{6}X{6}\\d{4}-[A-Z]{4}\\d{4}-WNOIDA"
             ],
             "cabs": [
                 "POS \\d{6}X{6}\\d{4} UBER",
@@ -141,19 +142,24 @@
                 "CRV POS-\\d{6}\\*{6}\\d{4}-\\d{4}-SAVIOUR FI",
                 "CRV POS \\d{6}\\*{6}\\d{4} HPCL"
             ],
+            "meal_refunds": [
+                "UPI-ZOMATO-ZOMATO@HDFCBANK-HDFC0000053-9",
+                "CRV POS \\d{6}\\*{6}\\d{4} ZOMATO MEDIA PR",
+                "CRV POS \\d{6}\\*{6}\\d{4} ZOMATO GURGAON"
+            ],
+            "travel_refunds": [
+                "CRV POS-\\d{6}\\*{6}\\d{4}-\\d{4}-WWW OLACAB",
+                "CRV POS-\\d{6}\\*{6}\\d{4}-0805-MAKEMYTRIP",
+                "CRV POS \\d{6}\\*{6}\\d{4} TATA SIA AIRLIN"
+            ],
             "refunds": [
                 "POS REF \\d{6}\\*{6}\\d{4}-",
                 "POS \\d{6}\\*{6}\\d{4} RVSL DT - \\d{2}\/\\d{2}\/\\d{2}",
                 "NEFT RETURN-ACCOUNT DOES NOT EXIST-",
                 "NEFT CR-[A-Z]{4}\\d{7}-DELHI ACCOUNT CLOSUR",
                 "ACH C- [A-Z]{5}[0-9]{4}[A-Z]{1}-AY\\d{4}-\\d{2}-[A-Z]{2}\\d{10}",
-                "UPI-ZOMATO-ZOMATO@HDFCBANK-HDFC0000053-9",
-                "CRV POS \\d{6}\\*{6}\\d{4} ZOMATO MEDIA PR",
-                "CRV POS \\d{6}\\*{6}\\d{4} ZOMATO GURGAON",
-                "CRV POS-\\d{6}\\*{6}\\d{4}-\\d{4}-WWW OLACAB",
                 "UPIRET-\\d{8}-\\d{12}",
-                "CRV POS-\\d{6}\\*{6}\\d{4}-0805-MAKEMYTRIP",
-                "CRV POS \\d{6}\\*{6}\\d{4} TATA SIA AIRLIN"
+                "CRV POS \\d{6}\\*{6}\\d{4}"
             ],
             "reversals": [
                 "REV-UPI-\\d{14}-KARANBAJAJ23@OKHD",
@@ -165,7 +171,8 @@
             "dividends": [
                 "ACH C- SBI CARDS AND PAYMEN-\\d{6}",
                 "HG INFRA ENG DIV\\d{24}",
-                "ACH C- IRFC LTD-IR\\d{11}"
+                "ACH C- IRFC LTD-IR\\d{11}",
+                "ACH C- SUDARSHAN CHEMICAL I-\\d{5}"
             ],
             "cashback": [
                 "DEBIT CARD CASH BACK",
