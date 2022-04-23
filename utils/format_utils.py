@@ -1,3 +1,4 @@
+# Author: Karan Bajaj (karanbajaj23@gmail.com)
 
 DEFAULT_LENGTH = 81
 
