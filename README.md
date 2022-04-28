@@ -65,7 +65,7 @@ $ python analyse.py --file <file_path> --category <category_name>
 Output -
 ```
 Complete Summary +
-===================================== <category_name> ======================================
+=============================== <category_name> =================================
 01/11/21  XXX-XXXX XXXXX XXXXXXX XXXXXXXXXXXXXXXXX       XXX.XX
           .....
 .................................................................................
