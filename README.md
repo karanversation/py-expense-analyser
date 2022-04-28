@@ -48,13 +48,15 @@ XX,XX,XXX  TOTAL
 #################################################################################
 ```
 
-Filtered Summary for a month
+### Filters
+
+Filtered Summary for a month -
 
 ```shell
 $ python analyse.py --file <file_path> --month <1-12>
 ```
 
-Filtered Summary for a category
+Filtered Summary for a category -
 
 ```shell
 $ python analyse.py --file <file_path> --category <category_name>
@@ -72,8 +74,7 @@ Complete Summary +
 #################################################################################
 ```
 
-
-Summary for a transaction type (credit/debit/all)
+Filtered Summary for a transaction type (credit/debit/all) -
 
 ```shell
 $ python analyse.py --file <file_path> --type <credit/debit/all>
@@ -103,13 +104,24 @@ XX,XX,XXX  TOTAL
 #################################################################################
 ```
 
-With optional args
+### Display options
+
+
+Display all transactions along with the summary
 
 ```shell
-$ python analyse.py --file <file_path> --month MM --category <category_name> --all --category_all --full_line --credit
+$ python analyse.py --file <file_path> --all
 ```
 
-### Example
+
+Display the full line of transactions
+
+```shell
+$ python analyse.py --file <file_path> --all --full_line
+```
+
+
+## Example
 
 ```shell
 $ python analyse.py --file 95380512_7845559435835.txt --month 05 --category online_shopping
