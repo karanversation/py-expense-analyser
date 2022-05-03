@@ -1,4 +1,4 @@
-# pyStatementAnalyser
+# py-expense-analyser
 Python-based bank statement analyser\
 Currently it only supports parsing HDFC bank statements downloaded in .txt format
 
