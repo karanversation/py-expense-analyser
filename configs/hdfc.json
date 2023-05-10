@@ -40,6 +40,9 @@
                 "FD THROUGH NET-\\d{14}:KARAN BAJA",
                 "\\d{14}- RD INSTALLMENT-"
             ],
+            "subscriptions": [
+                "ME DC SI \\d{6}X{6}\\d{4} YOUTUBE"
+            ],
             "online_groceries": [
                 "POS \\d{6}X{6}\\d{4} DOORSTEP RETAIL",
                 "POS \\d{6}X{6}\\d{4} PAYU-WWW.BIGBASK",
@@ -99,6 +102,9 @@
                 "POS \\d{6}X{6}\\d{4} SR PHARMACY",
                 "UPI-PRACTO-PRACTO1.PAYU@HDFCBANK-HDFC000",
                 "UPI-LALPATH AJMER-\\d{10}@PAYTM-BARB0"
+            ],
+            "credit_card": [
+                "KQTXW5UNAF5KJPGXCY/PAYUCRED"
             ],
             "paytm": [
                 "POS \\d{6}X{6}\\d{4} PTM\\*PAYTM",
@@ -169,10 +175,31 @@
                 "PRINCIPAL AUTO REDEEM \\d{14}"
             ],
             "dividends": [
-                "ACH C- SBI CARDS AND PAYMEN-\\d{6}",
                 "HG INFRA ENG DIV\\d{24}",
+                "APCOTEX",
+                "INDIAN HOTEL DIV",
+                "SANSERA ENG DIV",
+                "GSFC DIV",
+                "ACH C- SBI CARDS AND PAYMEN-\\d{6}",
                 "ACH C- IRFC LTD-IR\\d{11}",
-                "ACH C- SUDARSHAN CHEMICAL I-\\d{5}"
+                "ACH C- SUDARSHAN CHEMICAL I-\\d{5}",
+                "ACH C- JUBILANT",
+                "ACH C- ITC",
+                "ACH C- INDIAN RAILWAY",
+                "ACH C- SBICARD",
+                "ACH C- COSMO FILMS",
+                "ACH C- APCOTEX INDUSTRIES",
+                "ACH C- AARNAV FASHIONS",
+                "ACH C- BSE LIMITED",
+                "ACH C- DEEPAK NITRITE",
+                "ACH C- MAHINDRA & MAHINDRA",
+                "ACH C- BATA INDIA LTD",
+                "ACH C- SANGHVI MOVERS LIMIT",
+                "ACH C- ICICI BANK",
+                "ACH C- CDSL",
+                "ACH C- SUNTECK",
+                "ACH C- CENTURYPLYBOARDS",
+                "ACH C- UBLFINDIV"
             ],
             "cashback": [
                 "DEBIT CARD CASH BACK",
@@ -212,11 +239,12 @@
                 "UPI-ANIKESH G BHANDARKAR-ANIKESHB2012-1@",
                 "UPI-APARNA ARUN-APARNA.ARUN744@OKAXIS-UT",
                 "UPI-ESHESH",
-                "UPI-MRIDUL"
+                "UPI-MRIDUL",
+                "\\d{14}-TPT-TRANSFER-RISHABH PURW"
             ],
             "other_bank_transfers": [
-                "NEFT DR-[A-Z]{4}0[A-Z0-9]{6}-",
-                "RTGS DR-[A-Z]{4}0[A-Z0-9]{6}-",
+                "NEFT [C|D]R-[A-Z]{4}0[A-Z0-9]{6}-",
+                "RTGS [C|D]R-[A-Z]{4}0[A-Z0-9]{6}-",
                 "IMPS-\\d{12}-"
             ],
             "other_upi": [
