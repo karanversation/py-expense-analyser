@@ -29,7 +29,7 @@
                 "CHQ PAID-MICR CTS-NO-\\w*",
                 "CHQ PAID-INWARD TRAN-PIRAMAL HOUSING FIN",
                 "RHDF\\d{10}/BILLDKPIRAMALCAPITAL",
-                "ACH D- RACPC CUM SARC NOIDA-NCACDOSYM220"
+                "ACH D- RACPC CUM SARC NOIDA-NCACDOSYM\\d{3}"
             ],
             "insurance": [
                 "POS \\d{6}X{6}\\d{4} TPS\\*SBI LIFE INS",
